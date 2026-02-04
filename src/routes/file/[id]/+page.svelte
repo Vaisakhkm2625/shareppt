@@ -15,6 +15,10 @@
 
     onMount(async () => {
         try {
+            // Wait a short moment for auth to initialize if not present
+            // This prevents "permission denied" on reload if the SDK hasn't loaded the user token yet
+            // but the file is private.
+
             const docRef = doc(db, "files", fileId);
             const docSnap = await getDoc(docRef);
 

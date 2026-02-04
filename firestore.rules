@@ -5,8 +5,9 @@ service cloud.firestore {
       // Allow create if auth matches ownerId
       allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
       
-      // Allow read if owner or public
-      allow read: if request.auth != null && (resource.data.ownerId == request.auth.uid || resource.data.isPublic == true);
+      // Allow read if public OR if owner
+      // We check isPublic first to allow unauthenticated access to public files
+      allow read: if (resource.data.isPublic == true) || (request.auth != null && resource.data.ownerId == request.auth.uid);
       
       // Allow update/delete only if owner
       allow update, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;

@@ -117,6 +117,7 @@
                     uploadedFileId = docRef.id;
                     uploadSuccess = true;
                     files = [];
+                    goto("/dashboard");
                 } catch (err: any) {
                     error = "Failed to save file metadata: " + err.message;
                 } finally {
